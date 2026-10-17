@@ -26,7 +26,7 @@ wss.on('connection', ws => {
       ws.x = m.x; ws.y = m.y; ws.z = m.z; ws.yaw = m.yaw;
       all({ t: 'pos', id: ws.id, x: m.x, y: m.y, z: m.z, yaw: m.yaw }, ws);
     } else if (m.t === 'blk') {
-      if (!(int(m.x, 0, W) && int(m.y, 1, H) && int(m.z, 0, W) && int(m.b, 0, 12))) return;
+      if (!(int(m.x, 0, W) && int(m.y, 1, H) && int(m.z, 0, W) && int(m.b, 0, 40))) return;
       edits.set(m.x + ',' + m.y + ',' + m.z, [m.x, m.y, m.z, m.b]); saved = false;
       all({ t: 'blk', x: m.x, y: m.y, z: m.z, b: m.b }, ws);
     }
@@ -35,3 +35,4 @@ wss.on('connection', ws => {
 });
 setInterval(() => { if (!saved) { fs.writeFileSync(FILE, JSON.stringify([...edits.values()])); saved = true; } }, 10000);
 console.log('BlokDünya sunucusu çalışıyor, port ' + PORT);
+ 
